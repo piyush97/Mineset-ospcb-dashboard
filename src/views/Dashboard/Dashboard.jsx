@@ -3,20 +3,9 @@ import ChartistGraph from "react-chartist";
 import { Grid, Row, Col } from "react-bootstrap";
 
 import { Card } from "components/Card/Card.jsx";
-import { StatsCard } from "components/StatsCard/StatsCard.jsx";
-import { Tasks } from "components/Tasks/Tasks.jsx";
-import {
-  dataPie,
-  legendPie,
-  dataSales,
-  optionsSales,
-  responsiveSales,
-  legendSales,
-  dataBar,
-  optionsBar,
-  responsiveBar,
-  legendBar
-} from "variables/Variables.jsx";
+// import { StatsCard } from "components/StatsCard/StatsCard.jsx";
+// import { Tasks } from "components/Tasks/Tasks.jsx";
+import { dataBar, optionsBar, responsiveBar, legendBar } from "variables/Variables.jsx";
 
 class Dashboard extends Component {
   createLegend(json) {
@@ -34,16 +23,16 @@ class Dashboard extends Component {
       <div className="content">
         <Grid fluid>
           <Row>
-            <Col lg={3} sm={6}>
-              <StatsCard
-                bigIcon={<i className="pe-7s-server text-warning" />}
-                statsText="Capacity"
-                statsValue="105GB"
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText="Updated now"
+            <Col lg={12} sm={12}>
+              <Card
+              id = "welcome"
+              title = "OSPCB Dashboard"
+              category = "Lorem"
+              stats = "Lorem Ipsum"
+
               />
             </Col>
-            <Col lg={3} sm={6}>
+          {/*  <Col lg={3} sm={6}>
               <StatsCard
                 bigIcon={<i className="pe-7s-wallet text-success" />}
                 statsText="Revenue"
@@ -113,14 +102,15 @@ class Dashboard extends Component {
                 }
               />
             </Col>
+              */}
           </Row>
 
           <Row>
-            <Col md={6}>
+            <Col md={12}>
               <Card
-                id="chartActivity"
-                title="2014 Sales"
-                category="All products including Taxes"
+                id="AirQuality"
+                title = "AirQuality"
+                category="All mines AQI Included"
                 stats="Data information certified"
                 statsIcon="fa fa-check"
                 content={
@@ -135,22 +125,6 @@ class Dashboard extends Component {
                 }
                 legend={
                   <div className="legend">{this.createLegend(legendBar)}</div>
-                }
-              />
-            </Col>
-
-            <Col md={6}>
-              <Card
-                title="Tasks"
-                category="Backend development"
-                stats="Updated 3 minutes ago"
-                statsIcon="fa fa-history"
-                content={
-                  <div className="table-full-width">
-                    <table className="table">
-                      <Tasks />
-                    </table>
-                  </div>
                 }
               />
             </Col>
