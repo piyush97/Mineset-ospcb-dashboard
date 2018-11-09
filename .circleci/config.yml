@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  build:
+    ignore:
+        - gh-pages
+    docker: # use the docker executor type; machine and macos executors are also supported
+        - image: circleci/node:10
+    environment:
+        - SOURCE_BRANCH: master
+    steps:
+      - checkout # check out the code in the project directory
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+
+      - run:
+            name: Install dependencies
+            command: npm install
+      
+      - run: npm rebuild node-sass
+
+      - restore_cache:
+          keys:
+              # when lock file changes, use increasingly general patterns to restore cache
+              - node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+              - node-v1-{{ .Branch }}-
+              - node-v1-
+      - save_cache:
+          paths:
+              - ~/usr/local/lib/node_modules  # location depends on npm version
+          key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+
+      - run:
+            name: Build
+            command: npm run build
+
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push $PiyushURL master
+
