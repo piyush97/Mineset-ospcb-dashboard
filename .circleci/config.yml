@@ -39,5 +39,4 @@ jobs:
       - run:
           name: Deploy Master to Heroku
           command: |
-            git push $PiyushURL master
-
+            git push https://heroku:5d1c7be5-d6a3-4d7a-a1d7-bb705b842769@git.heroku.com/ospcb.git master
