@@ -13,13 +13,7 @@ const dashboardRoutes = [
     name: "Dashboard",
     icon: "pe-7s-graph",
     component: Dashboard
-  },
-  // {
-  //   path: "/user",
-  //   name: "User Profile",
-  //   icon: "pe-7s-user",
-  //   component: UserProfile
-  // },
+  }
   // {
   //   path: "/table",
   //   name: "Table List",
@@ -47,7 +41,7 @@ const dashboardRoutes = [
   //   icon: "pe-7s-rocket",
   //   component: Upgrade
   // },
-  { redirect: true, path: "/", to: "/dashboard", name: "Dashboard" }
+  ,{ redirect: true, path: "/", to: "/dashboard", name: "Dashboard" }
 ];
 
 export default dashboardRoutes;

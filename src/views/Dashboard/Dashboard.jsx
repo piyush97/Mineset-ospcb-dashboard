@@ -1,11 +1,29 @@
 import React, { Component } from "react";
 import ChartistGraph from "react-chartist";
-import { Grid, Row, Col, DropdownButton, MenuItem, Table } from "react-bootstrap";
+import { Grid, Row, Col, DropdownButton, MenuItem, Table, Modal, Button } from "react-bootstrap";
 import { Card } from "components/Card/Card.jsx";
 
 class Dashboard extends Component {
-
   
+  constructor(props) {
+    super(props);
+    this.state = {
+    show: false
+    }
+   this.handleShow = this.handleShow.bind(this);
+   this.handleClose = this.handleClose.bind(this);
+  }
+handleClose() {
+  this.setState({
+    show: false
+  });
+}
+
+handleShow() {
+  this.setState({
+    show: true
+  });
+}
   createLegend(json) {
     var legend = [];
     for (var i = 0; i < json["names"].length; i++) {
@@ -44,15 +62,17 @@ class Dashboard extends Component {
     const thArray = [<h5><b>SNo</b></h5>, <div><h5><b>Mine <input style={{float:"right"}} name="search Mine" placeholder="Search Mine"/></b></h5></div>, <h5><b>Location</b></h5>];
 
     const tdArray = [
-      ["1", "Mine 1", "$36,738"],
-      ["2", "Mine 2", "$23,789"],
-      ["3", "Mine 3", "$56,142"],
-      ["4", "Mine 4", "$38,735"],
+      ["1", <span onClick={this.handleShow} style={{cursor:"pointer"}}>Mine 1</span>, "$36,738"],
+      ["2",  <span onClick={this.handleShow} style={{cursor:"pointer"}}>Mine 2</span>, "$23,789"],
+      ["3",  <span onClick={this.handleShow} style={{cursor:"pointer"}}>Mine 3</span>, "$56,142"],
+      ["4",  <span onClick={this.handleShow} style={{cursor:"pointer"}}>Mine 4</span>,"$38,735"],
     ];
 
     return (
       <div className="content">
+      
         <Grid fluid>
+       
           <Row>
             <Col lg={12} sm={12}>
               <Card
@@ -246,6 +266,21 @@ class Dashboard extends Component {
             </Col>
           </Row>          
         </Grid>
+        
+         {this.state.show && <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>Text in a modal</h4>
+            <p>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </p>
+              </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleClose}>Close</Button>
+          </Modal.Footer>
+        </Modal>}
       </div>
     );
   }
