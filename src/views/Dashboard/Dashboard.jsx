@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import ChartistGraph from "react-chartist";
-import { Grid, Row, Col } from "react-bootstrap";
-
+import { Grid, Row, Col, DropdownButton, MenuItem, Table } from "react-bootstrap";
 import { Card } from "components/Card/Card.jsx";
-// import { StatsCard } from "components/StatsCard/StatsCard.jsx";
-// import { Tasks } from "components/Tasks/Tasks.jsx";
-import { dataBar, optionsBar, responsiveBar, legendBar } from "variables/Variables.jsx";
 
 class Dashboard extends Component {
+
+  
   createLegend(json) {
     var legend = [];
     for (var i = 0; i < json["names"].length; i++) {
@@ -19,6 +17,39 @@ class Dashboard extends Component {
     return legend;
   }
   render() {
+    var dataBar = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      series: [
+        [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
+      ]
+    };
+    var optionsBar = {
+      seriesBarDistance: 10,
+      axisX: {
+        showGrid: false
+      },
+      height: "245px"
+    };
+    var responsiveBar = [
+      ['screen and (max-width: 640px)', {
+        seriesBarDistance: 5,
+        axisX: {
+          labelInterpolationFnc: function (value) {
+            return value[0];
+          }
+        }
+      }]
+    ];
+
+    const thArray = [<h5><b>SNo</b></h5>, <div><h5><b>Mine <input style={{float:"right"}} name="search Mine" placeholder="Search Mine"/></b></h5></div>, <h5><b>Location</b></h5>];
+
+    const tdArray = [
+      ["1", "Mine 1", "$36,738"],
+      ["2", "Mine 2", "$23,789"],
+      ["3", "Mine 3", "$56,142"],
+      ["4", "Mine 4", "$38,735"],
+    ];
+
     return (
       <div className="content">
         <Grid fluid>
@@ -123,12 +154,97 @@ class Dashboard extends Component {
                     />
                   </div>
                 }
-                legend={
-                  <div className="legend">{this.createLegend(legendBar)}</div>
-                }
               />
             </Col>
           </Row>
+          <Row>
+            <Col md={12}>
+              <Card
+                id="analysis"
+                title="Analysis"
+                category = "Analysis"
+                content={
+                  <div className="ct-chart">
+                    <DropdownButton 
+                    md={12} lg={4} xs={12} xl={4}
+                    title="All Mines" 
+                    >
+                    <MenuItem eventKey="1">All Mines</MenuItem>
+                    <MenuItem eventKey="2">ABC</MenuItem>
+                    <MenuItem eventKey="3">ABC2</MenuItem>
+                    </DropdownButton>
+                      <div className="row">
+                        <div className="col-md-4 col-lg-4 col-sm-12 col-xs-12" style={{ maxHeight:"320px" }}>
+                          <ChartistGraph
+                          data={dataBar}
+                          type="Bar"
+                          options={optionsBar}
+                          responsiveOptions={responsiveBar}
+                          />
+                        </div>
+                        <div className="col-md-4 col-lg-4 col-sm-12 col-xs-12" style={{ maxHeight:"320px" }}>
+                          <ChartistGraph
+                          data={dataBar}
+                          type="Bar"
+                          options={optionsBar}
+                          responsiveOptions={responsiveBar}
+                          />
+                        </div>
+                          <div className="col-md-4 col-lg-4 col-sm-12 col-xs-12" style={{ maxHeight:"320px" }}>
+                          <ChartistGraph
+                          data={dataBar}
+                          type="Bar"
+                          options={optionsBar}
+                          responsiveOptions={responsiveBar}
+                          />
+                        </div>
+                      </div>
+                </div>
+                }
+              />    
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12}>
+              <Card
+                id="MineView"
+                title = "Mine View"
+                category="All mines View"
+                content={
+                  <div className="ct-chart">
+                    <Table hover>
+                        <thead>
+                            <tr>
+                                {
+                                    thArray.map((prop, key) => {
+                                        return (
+                                        <th  key={key}>{prop}</th>
+                                        );
+                                    })
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                tdArray.map((prop,key) => {
+                                    return (
+                                        <tr key={key}>{
+                                            prop.map((prop,key)=> {
+                                                return (
+                                                    <td  key={key}>{prop}</td>
+                                                );
+                                            })
+                                        }</tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                  </div>
+                }
+              />
+            </Col>
+          </Row>          
         </Grid>
       </div>
     );
